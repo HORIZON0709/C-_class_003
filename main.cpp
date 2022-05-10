@@ -74,7 +74,7 @@ void main(void)
 
 		for (int i = 0; i < nNumEnemy; i++)
 		{//出力
-			printf("\n %d体目", (i + 1));	//何体目か表示
+			printf("\n 《 %d体目 》", (i + 1));	//何体目か表示
 			pEnemyHuman[i].Output();
 		}
 
@@ -114,7 +114,7 @@ void main(void)
 
 		for (int i = 0; i < nNumEnemy; i++)
 		{//出力
-			printf("\n %d体目", (i + 1));	//何体目か表示
+			printf("\n 《 %d体目 》", (i + 1));	//何体目か表示
 			pEnemyBird[i].Output();
 		}
 
