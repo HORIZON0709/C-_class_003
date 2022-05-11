@@ -44,7 +44,7 @@ CEnemy::ENEMY_TYPE SelectType();
 void Init();
 int Input();
 void Output(int nNumEnemy);
-void Uninit();
+void Uninit(int nNumEnemy);
 }// namespaceはここまで
 
 //===================================================
@@ -62,7 +62,7 @@ void main(void)
 	Output(nNumEnemy);
 	
 	//終了
-	Uninit();
+	Uninit(nNumEnemy);
 
 	//終了メッセージ & Enter入力待ち
 	printf("\n プログラムを終了します。お疲れ様でした。");
@@ -256,9 +256,9 @@ void Output(int nNumEnemy)
 //---------------------------------------------------
 //終了
 //---------------------------------------------------
-void Uninit()
+void Uninit(int nNumEnemy)
 {
-	for (int i = 0; i < CEnemy::MAX_ENEMY; i++)
+	for (int i = 0; i < nNumEnemy; i++)
 	{
 		//終了
 		s_apEnemy[i]->Uninit();
