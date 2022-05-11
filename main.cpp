@@ -26,12 +26,25 @@ namespace
 }// namespaceはここまで
 
 //********************************
+//スタティック変数
+//********************************
+namespace
+{
+CEnemy* s_apEnemy[CEnemy::MAX_ENEMY];	//敵情報のポインタ
+}// namespaceはここまで
+
+//********************************
 //プロトタイプ宣言
 //********************************
 namespace
 {
-CEnemy::ENEMY_TYPE SelectType();
 int SetNumEnemy();
+CEnemy::ENEMY_TYPE SelectType();
+
+void Init();
+int Input();
+void Output(int nNumEnemy);
+void Uninit();
 }// namespaceはここまで
 
 //===================================================
@@ -39,83 +52,20 @@ int SetNumEnemy();
 //===================================================
 void main(void)
 {
-	CEnemy* apEnemy[CEnemy::MAX_ENEMY] = {};	//敵情報のポインタ
+	//初期化
+	Init();
 
 	//敵の数を設定
-	int nNumEnemy = SetNumEnemy();
+	int nNumEnemy = Input();
 
-	for (int i = 0; i < nNumEnemy; i++)
-	{
-		if (apEnemy[i] != nullptr)
-		{//NULLチェック
-			//メモリの解放
-			delete apEnemy[i];
-			apEnemy[i] = nullptr;
-		}
+	//出力
+	Output(nNumEnemy);
+	
+	//終了
+	Uninit();
 
-		//何体目か表示
-		printf("\n 《 %d体目 》", (i + 1));
-
-		//敵の種類を選択
-		CEnemy::ENEMY_TYPE type = SelectType();
-
-		switch (type)
-		{//敵の種類毎の処理
-		case CEnemy::ENEMY_TYPE::HUMAN:		/* 人型 */
-
-			//メモリの動的確保
-			apEnemy[i] = new CEnemyHuman;
-			break;
-
-		case CEnemy::ENEMY_TYPE::BIRD:		/* 鳥型 */
-
-			//メモリの動的確保
-			apEnemy[i] = new CEnemyBird;
-			break;
-
-		case CEnemy::ENEMY_TYPE::NONE:		/* 選択範囲外 */
-		case CEnemy::ENEMY_TYPE::MAX:
-		default:
-			assert(false);
-			break;
-		}
-
-		if (apEnemy[i] == nullptr)
-		{//NULLチェック
-			continue;
-		}
-
-		/* nullptrでは無い場合 */
-		apEnemy[i]->Init();		//初期化
-		apEnemy[i]->Input();	//入力
-		apEnemy[i]->Output();	//出力
-		apEnemy[i]->Uninit();	//終了
-
-		//Enter入力待ち
-		PressEnter();
-
-		//画面をクリア
-		system("cls");
-	}
-
-	for (int i = 0; i < CEnemy::MAX_ENEMY; i++)
-	{
-		if (apEnemy[i] == nullptr)
-		{//NULLチェック
-			continue;
-		}
-
-		/* nullptrではない場合 */
-		
-		//メモリの解放
-		delete apEnemy[i];
-		apEnemy[i] = nullptr;
-	}
-
-	//終了メッセージ
+	//終了メッセージ & Enter入力待ち
 	printf("\n プログラムを終了します。お疲れ様でした。");
-
-	//Enter入力待ち
 	PressEnter();
 }
 
@@ -132,6 +82,40 @@ void PressEnter()
 
 namespace
 {
+//---------------------------------------------------
+//敵の数を設定
+//---------------------------------------------------
+int SetNumEnemy()
+{
+	int nNumEnemy = 0;	//敵の数設定用
+
+	while (1)
+	{
+		//メッセージ
+		printf("\n 敵の数を設定( %d～%d体まで ) > ", CEnemy::MIN_ENEMY,CEnemy::MAX_ENEMY);
+		scanf("%d", &nNumEnemy);
+
+		if ((nNumEnemy >= CEnemy::MIN_ENEMY) && (nNumEnemy <= CEnemy::MAX_ENEMY))
+		{//範囲内
+			break;
+		}
+
+		/* 範囲外 */
+
+		//メッセージ & Enter入力待ち
+		printf("\n ※※※ 範囲外です ※※※");
+		PressEnter();
+
+		//画面をクリア
+		system("cls");
+	}
+
+	//画面をクリア
+	system("cls");
+
+	return nNumEnemy;	//設定した敵の数を返す
+}
+
 //---------------------------------------------------
 //敵の種類を選択
 //---------------------------------------------------
@@ -156,7 +140,7 @@ CEnemy::ENEMY_TYPE SelectType()
 		/* 範囲外 */
 
 		//メッセージ & Enter入力待ち
-		printf("\n\n ※※※ 範囲外です ※※※");
+		printf("\n ※※※ 範囲外です ※※※");
 		PressEnter();
 
 		//画面をクリア
@@ -167,36 +151,128 @@ CEnemy::ENEMY_TYPE SelectType()
 }
 
 //---------------------------------------------------
-//敵の数を設定
+//初期化
 //---------------------------------------------------
-int SetNumEnemy()
+void Init()
 {
-	int nNumEnemy = 0;	//敵の数設定用
+	for (int i = 0; i < CEnemy::MAX_ENEMY; i++)
+	{//nullptrで初期化する
+		if (s_apEnemy[i] == nullptr)
+		{//NULLチェック
+			continue;
+		}
 
-	while (1)
+		/* nullptrではない場合 */
+
+		//メモリの解放
+		delete s_apEnemy[i];
+		s_apEnemy[i] = nullptr;
+
+		//初期化
+		s_apEnemy[i]->Init();
+	}
+}
+
+//---------------------------------------------------
+//入力
+//---------------------------------------------------
+int Input()
+{
+	//敵の数を設定
+	int nNumEnemy = SetNumEnemy();
+
+	for (int i = 0; i < nNumEnemy; i++)
 	{
-		//メッセージ
-		printf("\n 敵の数を設定( %d体まで ) > ",CEnemy::MAX_ENEMY);
-		scanf("%d", &nNumEnemy);
+		if (s_apEnemy[i] != nullptr)
+		{//NULLチェック
+			//メモリの解放
+			delete s_apEnemy[i];
+			s_apEnemy[i] = nullptr;
+		}
 
-		if ((nNumEnemy >= CEnemy::MIN_ENEMY) && (nNumEnemy <= CEnemy::MAX_ENEMY))
-		{//範囲内
+		//何体目か表示
+		printf("\n 《 %d体目 》", (i + 1));
+
+		//敵の種類を選択
+		CEnemy::ENEMY_TYPE type = SelectType();
+
+		switch (type)
+		{//敵の種類毎の処理
+		case CEnemy::ENEMY_TYPE::HUMAN:		/* 人型 */
+
+			//メモリの動的確保
+			s_apEnemy[i] = new CEnemyHuman;
+			break;
+
+		case CEnemy::ENEMY_TYPE::BIRD:		/* 鳥型 */
+
+			//メモリの動的確保
+			s_apEnemy[i] = new CEnemyBird;
+			break;
+
+		case CEnemy::ENEMY_TYPE::NONE:		/* 選択範囲外 */
+		case CEnemy::ENEMY_TYPE::MAX:
+		default:
+			assert(false);
 			break;
 		}
 
-		/* 範囲外 */
+		if (s_apEnemy[i] == nullptr)
+		{//NULLチェック
+			continue;
+		}
 
-		//メッセージ & Enter入力待ち
-		printf("\n\n ※※※ 範囲外です ※※※");
-		PressEnter();
+		/* nullptrでは無い場合 */
+
+		//入力
+		s_apEnemy[i]->Input();
 
 		//画面をクリア
 		system("cls");
 	}
 
-	//画面をクリア
-	system("cls");
-
 	return nNumEnemy;	//設定した敵の数を返す
+}
+
+//---------------------------------------------------
+//出力
+//---------------------------------------------------
+void Output(int nNumEnemy)
+{
+	for (int i = 0; i < nNumEnemy; i++)
+	{
+		if (s_apEnemy[i] == nullptr)
+		{//NULLチェック
+			continue;
+		}
+
+		/* nullptrでは無い場合 */
+
+		//出力
+		s_apEnemy[i]->Output();
+	}
+}
+
+//---------------------------------------------------
+//終了
+//---------------------------------------------------
+void Uninit()
+{
+	for (int i = 0; i < CEnemy::MAX_ENEMY; i++)
+	{
+		//終了
+		s_apEnemy[i]->Uninit();
+
+		if (s_apEnemy[i] == nullptr)
+		{//NULLチェック
+			continue;
+		}
+
+		/* nullptrではない場合 */
+
+		//メモリの解放
+		delete s_apEnemy[i];
+		s_apEnemy[i] = nullptr;
+	}
 }
 }
