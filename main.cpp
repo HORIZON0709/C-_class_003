@@ -39,17 +39,31 @@ int SetNumEnemy();
 //===================================================
 void main(void)
 {
-	CEnemy* pEnemy = nullptr;	//敵情報のポインタ
+	CEnemy* pEnemy = nullptr;		//敵情報のポインタ
 	pEnemy = new CEnemyHuman[2];	//メモリの動的確保
 
 	for (int i = 0; i < 2; i++)
-	{
-		pEnemy->Init();
-		pEnemy->Input();
-		pEnemy->Output();
-		pEnemy->Uninit();
+	{//初期化
+		//pEnemy[i].Init();	<------これだと間違い
+		((CEnemyHuman*)pEnemy)[i].Init();	//キャストすると想定していた動きになる
 	}
 
+	for (int i = 0; i < 2; i++)
+	{//入力
+		((CEnemyHuman*)pEnemy)[i].Input();
+	}
+
+	for (int i = 0; i < 2; i++)
+	{//出力
+		((CEnemyHuman*)pEnemy)[i].Output();
+	}
+
+	for (int i = 0; i < 2; i++)
+	{//終了
+		((CEnemyHuman*)pEnemy)[i].Uninit();
+	}
+
+	//メモリの解放
 	delete[] pEnemy;
 	pEnemy = nullptr;
 

@@ -19,10 +19,10 @@ public:		/* コンストラクタ・デストラクタ */
 	~CEnemyHuman();
 
 public:		/* メンバー関数宣言 */
-	void Init();	//初期化
-	void Uninit();	//終了
-	void Input();	//入力
-	void Output();	//出力
+	void Init()override;	//初期化
+	void Uninit()override;	//終了
+	void Input()override;	//入力
+	void Output()override;	//出力
 
 private:	/* メンバー変数宣言 */
 	int m_nSpeedWalk;	//歩くスピード
