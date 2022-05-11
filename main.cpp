@@ -39,98 +39,112 @@ int SetNumEnemy();
 //===================================================
 void main(void)
 {
-	//ポインタ
-	CEnemyHuman* pEnemyHuman = nullptr;		//人型の敵
-	CEnemyBird* pEnemyBird = nullptr;		//鳥型の敵
+	CEnemy* pEnemy = nullptr;	//敵情報のポインタ
+	pEnemy = new CEnemyHuman[2];	//メモリの動的確保
 
-	//敵の種類を選択
-	CEnemy::ENEMY_TYPE type = SelectType();
-	
-	//敵の数を設定
-	int nNumEnemy = SetNumEnemy();
-
-	switch (type)
+	for (int i = 0; i < 2; i++)
 	{
-	case CEnemy::ENEMY_TYPE::HUMAN:	/* 人型 */
-
-		if (pEnemyHuman == nullptr)
-		{//NULLチェック
-			//メモリの動的確保
-			pEnemyHuman = new CEnemyHuman[nNumEnemy];
-		}
-
-		for (int i = 0; i < nNumEnemy; i++)
-		{//初期化
-			pEnemyHuman[i].Init();
-		}
-
-		for (int i = 0; i < nNumEnemy; i++)
-		{//入力
-			pEnemyHuman[i].Input();
-		}
-
-		//画面をクリア
-		system("cls");
-
-		for (int i = 0; i < nNumEnemy; i++)
-		{//出力
-			printf("\n 《 %d体目 》", (i + 1));	//何体目か表示
-			pEnemyHuman[i].Output();
-		}
-
-		for (int i = 0; i < nNumEnemy; i++)
-		{//終了
-			pEnemyHuman[i].Uninit();
-		}
-
-		if (pEnemyHuman != nullptr)
-		{//NULLチェック
-			//メモリの解放
-			delete[] pEnemyHuman;
-			pEnemyHuman = nullptr;
-		}
-		break;
-
-	case CEnemy::ENEMY_TYPE::BIRD:
-
-		if (pEnemyBird == nullptr)
-		{//NULLチェック
-			//メモリの動的確保
-			pEnemyBird = new CEnemyBird[nNumEnemy];
-		}
-
-		for (int i = 0; i < nNumEnemy; i++)
-		{//初期化
-			pEnemyBird[i].Init();
-		}
-
-		for (int i = 0; i < nNumEnemy; i++)
-		{//入力
-			pEnemyBird[i].Input();
-		}
-
-		//画面をクリア
-		system("cls");
-
-		for (int i = 0; i < nNumEnemy; i++)
-		{//出力
-			printf("\n 《 %d体目 》", (i + 1));	//何体目か表示
-			pEnemyBird[i].Output();
-		}
-
-		for (int i = 0; i < nNumEnemy; i++)
-		{//終了
-			pEnemyBird[i].Uninit();
-		}
-
-		if (pEnemyBird != nullptr)
-		{//NULLチェック
-			//メモリの解放
-			delete[] pEnemyBird;
-			pEnemyBird = nullptr;
-		}
-		break;
+		pEnemy->Init();
+		pEnemy->Input();
+		pEnemy->Output();
+		pEnemy->Uninit();
 	}
+
+	delete[] pEnemy;
+	pEnemy = nullptr;
+
+	////ポインタ
+	//CEnemyHuman* pEnemyHuman = nullptr;		//人型の敵
+	//CEnemyBird* pEnemyBird = nullptr;		//鳥型の敵
+
+	////敵の種類を選択
+	//CEnemy::ENEMY_TYPE type = SelectType();
+	//
+	////敵の数を設定
+	//int nNumEnemy = SetNumEnemy();
+
+	//switch (type)
+	//{
+	//case CEnemy::ENEMY_TYPE::HUMAN:	/* 人型 */
+
+	//	if (pEnemyHuman == nullptr)
+	//	{//NULLチェック
+	//		//メモリの動的確保
+	//		pEnemyHuman = new CEnemyHuman[nNumEnemy];
+	//	}
+
+	//	for (int i = 0; i < nNumEnemy; i++)
+	//	{//初期化
+	//		pEnemyHuman[i].Init();
+	//	}
+
+	//	for (int i = 0; i < nNumEnemy; i++)
+	//	{//入力
+	//		pEnemyHuman[i].Input();
+	//	}
+
+	//	//画面をクリア
+	//	system("cls");
+
+	//	for (int i = 0; i < nNumEnemy; i++)
+	//	{//出力
+	//		printf("\n 《 %d体目 》", (i + 1));	//何体目か表示
+	//		pEnemyHuman[i].Output();
+	//	}
+
+	//	for (int i = 0; i < nNumEnemy; i++)
+	//	{//終了
+	//		pEnemyHuman[i].Uninit();
+	//	}
+
+	//	if (pEnemyHuman != nullptr)
+	//	{//NULLチェック
+	//		//メモリの解放
+	//		delete[] pEnemyHuman;
+	//		pEnemyHuman = nullptr;
+	//	}
+	//	break;
+
+	//case CEnemy::ENEMY_TYPE::BIRD:
+
+	//	if (pEnemyBird == nullptr)
+	//	{//NULLチェック
+	//		//メモリの動的確保
+	//		pEnemyBird = new CEnemyBird[nNumEnemy];
+	//	}
+
+	//	for (int i = 0; i < nNumEnemy; i++)
+	//	{//初期化
+	//		pEnemyBird[i].Init();
+	//	}
+
+	//	for (int i = 0; i < nNumEnemy; i++)
+	//	{//入力
+	//		pEnemyBird[i].Input();
+	//	}
+
+	//	//画面をクリア
+	//	system("cls");
+
+	//	for (int i = 0; i < nNumEnemy; i++)
+	//	{//出力
+	//		printf("\n 《 %d体目 》", (i + 1));	//何体目か表示
+	//		pEnemyBird[i].Output();
+	//	}
+
+	//	for (int i = 0; i < nNumEnemy; i++)
+	//	{//終了
+	//		pEnemyBird[i].Uninit();
+	//	}
+
+	//	if (pEnemyBird != nullptr)
+	//	{//NULLチェック
+	//		//メモリの解放
+	//		delete[] pEnemyBird;
+	//		pEnemyBird = nullptr;
+	//	}
+	//	break;
+	//}
 
 	//終了メッセージ
 	printf("\n プログラムを終了します。お疲れ様でした。");
