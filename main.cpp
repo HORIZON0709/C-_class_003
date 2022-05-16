@@ -44,7 +44,7 @@ CEnemy::ENEMY_TYPE SelectType();
 void Init();
 int Input();
 void Output(int nNumEnemy);
-void Uninit(int nNumEnemy);
+void Uninit();
 }// namespaceはここまで
 
 //===================================================
@@ -62,7 +62,7 @@ void main(void)
 	Output(nNumEnemy);
 	
 	//終了
-	Uninit(nNumEnemy);
+	Uninit();
 
 	//終了メッセージ & Enter入力待ち
 	printf("\n プログラムを終了します。お疲れ様でした。");
@@ -164,12 +164,12 @@ void Init()
 
 		/* nullptrではない場合 */
 
+		//終了
+		s_apEnemy[i]->Uninit();
+
 		//メモリの解放
 		delete s_apEnemy[i];
 		s_apEnemy[i] = nullptr;
-
-		//初期化
-		s_apEnemy[i]->Init();
 	}
 }
 
@@ -217,6 +217,9 @@ int Input()
 			break;
 		}
 
+		//初期化
+		s_apEnemy[i]->Init();
+
 		if (s_apEnemy[i] == nullptr)
 		{//NULLチェック
 			continue;
@@ -256,19 +259,19 @@ void Output(int nNumEnemy)
 //---------------------------------------------------
 //終了
 //---------------------------------------------------
-void Uninit(int nNumEnemy)
+void Uninit()
 {
-	for (int i = 0; i < nNumEnemy; i++)
+	for (int i = 0; i < CEnemy::MAX_ENEMY; i++)
 	{
-		//終了
-		s_apEnemy[i]->Uninit();
-
 		if (s_apEnemy[i] == nullptr)
 		{//NULLチェック
 			continue;
 		}
 
 		/* nullptrではない場合 */
+
+		//終了
+		s_apEnemy[i]->Uninit();
 
 		//メモリの解放
 		delete s_apEnemy[i];
