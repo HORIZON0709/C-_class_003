@@ -42,8 +42,8 @@ int SetNumEnemy();
 CEnemy::ENEMY_TYPE SelectType();
 
 void Init();
-int Input();
-void Output(int nNumEnemy);
+void Input();
+void Output();
 void Uninit();
 }// namespaceはここまで
 
@@ -54,12 +54,12 @@ void main(void)
 {
 	//初期化
 	Init();
-
-	//敵の数を設定
-	int nNumEnemy = Input();
+	
+	//入力
+	Input();
 
 	//出力
-	Output(nNumEnemy);
+	Output();
 	
 	//終了
 	Uninit();
@@ -176,7 +176,7 @@ void Init()
 //---------------------------------------------------
 //入力
 //---------------------------------------------------
-int Input()
+void Input()
 {
 	//敵の数を設定
 	int nNumEnemy = SetNumEnemy();
@@ -233,16 +233,14 @@ int Input()
 		//画面をクリア
 		system("cls");
 	}
-
-	return nNumEnemy;	//設定した敵の数を返す
 }
 
 //---------------------------------------------------
 //出力
 //---------------------------------------------------
-void Output(int nNumEnemy)
+void Output()
 {
-	for (int i = 0; i < nNumEnemy; i++)
+	for (int i = 0; i < CEnemy::GetNumAll(); i++)
 	{
 		if (s_apEnemy[i] == nullptr)
 		{//NULLチェック

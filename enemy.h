@@ -21,21 +21,27 @@ public:		/* 列挙型の定義 */
 		MAX,
 	};
 
-public:	/* 定数の定義 */
+public:		/* 定数の定義 */
 	static const int MAX_ENEMY = 5;		//敵の最大数
 	static const int MIN_ENEMY = 1;		//敵の最少数
+
+public:		/* 静的メンバ関数宣言 */
+	static int GetNumAll();	//敵の総数を取得
 
 public:		/* コンストラクタ・デストラクタ */
 	CEnemy();
 	virtual ~CEnemy();
 
-public:		/* メンバー関数宣言 */
+public:		/* メンバ関数宣言 */
 	virtual void Init();	//初期化
 	virtual void Uninit();	//終了
 	virtual void Input();	//入力
 	virtual void Output();	//出力
 
-private:	/* メンバー変数宣言 */
+private:	/* 静的メンバ変数宣言 */
+	static int m_nNumAll;	//敵の総数
+
+private:	/* メンバ変数宣言 */
 	int m_nLife;	//体力
 	int m_nAttack;	//攻撃力
 };

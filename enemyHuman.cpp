@@ -18,7 +18,7 @@
 //===================================================
 CEnemyHuman::CEnemyHuman()
 {
-	//メンバー変数をクリア
+	//メンバ変数をクリア
 	m_nSpeedWalk = 0;
 }
 
@@ -38,7 +38,7 @@ void CEnemyHuman::Init()
 	//親クラスの初期化
 	CEnemy::Init();
 
-	//メンバー変数を初期化
+	//メンバ変数を初期化
 	m_nSpeedWalk = 0;
 }
 
