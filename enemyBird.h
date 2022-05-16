@@ -16,7 +16,7 @@ class CEnemyBird : public CEnemy
 {/* CEnemyの派生クラス */
 public:		/* コンストラクタ・デストラクタ */
 	CEnemyBird();
-	~CEnemyBird();
+	~CEnemyBird()override;
 
 public:		/* メンバー関数宣言 */
 	void Init()override;	//初期化

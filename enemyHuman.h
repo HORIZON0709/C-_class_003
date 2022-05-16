@@ -16,7 +16,7 @@ class CEnemyHuman : public CEnemy
 {/* CEnemyの派生クラス */
 public:		/* コンストラクタ・デストラクタ */
 	CEnemyHuman();
-	~CEnemyHuman();
+	~CEnemyHuman()override;
 
 public:		/* メンバー関数宣言 */
 	void Init()override;	//初期化
