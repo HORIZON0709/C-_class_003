@@ -40,6 +40,7 @@ namespace
 {
 int SetNumEnemy();
 CEnemy::ENEMY_TYPE SelectType();
+void OutputNumEnemy();
 
 void Init();
 void Input();
@@ -60,12 +61,12 @@ void main(void)
 
 	//出力
 	Output();
-	
+
 	//終了
 	Uninit();
 
 	//終了メッセージ & Enter入力待ち
-	printf("\n プログラムを終了します。お疲れ様でした。");
+	printf("\n\n プログラムを終了します。お疲れ様でした。");
 	PressEnter();
 }
 
@@ -148,6 +149,16 @@ CEnemy::ENEMY_TYPE SelectType()
 	}
 
 	return selectType;	//選択した敵の種類を返す
+}
+
+//---------------------------------------------------
+//敵の数を表示
+//---------------------------------------------------
+void OutputNumEnemy()
+{
+	printf("\n\n 敵の総数 : [ %d ]", CEnemy::GetNumAll());
+	printf("\n 人型 : [ %d ]", CEnemyHuman::GetNumAll());
+	printf("\n 鳥型 : [ %d ]", CEnemyBird::GetNumAll());
 }
 
 //---------------------------------------------------
@@ -252,6 +263,9 @@ void Output()
 		//出力
 		s_apEnemy[i]->Output();
 	}
+
+	//敵の数を表示
+	OutputNumEnemy();
 }
 
 //---------------------------------------------------

@@ -22,11 +22,11 @@ public:		/* 列挙型の定義 */
 	};
 
 public:		/* 定数の定義 */
-	static const int MAX_ENEMY = 5;		//敵の最大数
-	static const int MIN_ENEMY = 1;		//敵の最少数
+	static const int MAX_ENEMY = 5;		//最大数
+	static const int MIN_ENEMY = 1;		//最少数
 
 public:		/* 静的メンバ関数宣言 */
-	static int GetNumAll();	//敵の総数を取得
+	static int GetNumAll();	//総数を取得
 
 public:		/* コンストラクタ・デストラクタ */
 	CEnemy();
@@ -39,7 +39,7 @@ public:		/* メンバ関数宣言 */
 	virtual void Output();	//出力
 
 private:	/* 静的メンバ変数宣言 */
-	static int m_nNumAll;	//敵の総数
+	static int m_nNumAll;	//総数
 
 private:	/* メンバ変数宣言 */
 	int m_nLife;	//体力
