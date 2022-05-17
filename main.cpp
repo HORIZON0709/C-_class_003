@@ -39,7 +39,7 @@ CEnemy* s_apEnemy[CEnemy::MAX_ENEMY];	//“Gî•ñ‚Ìƒ|ƒCƒ“ƒ^
 namespace
 {
 int SetNumEnemy();
-CEnemy::ENEMY_TYPE SelectType();
+CEnemy::TYPE SelectType();
 void OutputNumEnemy();
 
 void Init();
@@ -120,20 +120,20 @@ int SetNumEnemy()
 //---------------------------------------------------
 //“G‚ÌŽí—Þ‚ð‘I‘ð
 //---------------------------------------------------
-CEnemy::ENEMY_TYPE SelectType()
+CEnemy::TYPE SelectType()
 {
-	CEnemy::ENEMY_TYPE selectType;	//“G‚ÌŽí—Þ‘I‘ð—p
+	CEnemy::TYPE selectType;	//“G‚ÌŽí—Þ‘I‘ð—p
 
 	while (1)
 	{
 		//ƒƒbƒZ[ƒW
 		printf("\n s “G‚ÌŽí—Þ‚ð‘I‘ð t");
-		printf("\n [%d] lŒ^",CEnemy::ENEMY_TYPE::HUMAN);
-		printf("\n [%d] ’¹Œ^", CEnemy::ENEMY_TYPE::BIRD);
+		printf("\n [%d] lŒ^",CEnemy::TYPE::HUMAN);
+		printf("\n [%d] ’¹Œ^", CEnemy::TYPE::BIRD);
 		printf("\n ”Ô†‚ð“ü—Í > ");
 		scanf("%d", &selectType);
 
-		if ((selectType > CEnemy::ENEMY_TYPE::NONE) && (selectType < CEnemy::ENEMY_TYPE::MAX))
+		if ((selectType > CEnemy::TYPE::NONE) && (selectType < CEnemy::TYPE::MAX))
 		{//”ÍˆÍ“à
 			break;
 		}
@@ -157,8 +157,8 @@ CEnemy::ENEMY_TYPE SelectType()
 void OutputNumEnemy()
 {
 	printf("\n\n “G‚Ì‘” : [ %d ]", CEnemy::GetNumAll());
-	printf("\n lŒ^ : [ %d ]", CEnemyHuman::GetNumAll());
-	printf("\n ’¹Œ^ : [ %d ]", CEnemyBird::GetNumAll());
+	printf("\n lŒ^ : [ %d ]", CEnemy::GetNumHuman());
+	printf("\n ’¹Œ^ : [ %d ]", CEnemy::GetNumBird());
 }
 
 //---------------------------------------------------
@@ -205,24 +205,24 @@ void Input()
 		printf("\n s %d‘Ì–Ú t", (i + 1));
 
 		//“G‚ÌŽí—Þ‚ð‘I‘ð
-		CEnemy::ENEMY_TYPE type = SelectType();
+		CEnemy::TYPE type = SelectType();
 
 		switch (type)
 		{//“G‚ÌŽí—Þ–ˆ‚Ìˆ—
-		case CEnemy::ENEMY_TYPE::HUMAN:		/* lŒ^ */
+		case CEnemy::TYPE::HUMAN:	/* lŒ^ */
 
 			//ƒƒ‚ƒŠ‚Ì“®“IŠm•Û
 			s_apEnemy[i] = new CEnemyHuman;
 			break;
 
-		case CEnemy::ENEMY_TYPE::BIRD:		/* ’¹Œ^ */
+		case CEnemy::TYPE::BIRD:	/* ’¹Œ^ */
 
 			//ƒƒ‚ƒŠ‚Ì“®“IŠm•Û
 			s_apEnemy[i] = new CEnemyBird;
 			break;
 
-		case CEnemy::ENEMY_TYPE::NONE:		/* ‘I‘ð”ÍˆÍŠO */
-		case CEnemy::ENEMY_TYPE::MAX:
+		case CEnemy::TYPE::NONE:	/* ‘I‘ð”ÍˆÍŠO */
+		case CEnemy::TYPE::MAX:
 		default:
 			assert(false);
 			break;
