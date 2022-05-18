@@ -10,8 +10,6 @@
 //********************************
 #include "main.h"
 #include "enemy.h"
-#include "enemyHuman.h"
-#include "enemyBird.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -30,7 +28,7 @@ namespace
 //********************************
 namespace
 {
-CEnemy* s_apEnemy[CEnemy::MAX_ENEMY];	//敵情報のポインタ
+
 }// namespaceはここまで
 
 //********************************
@@ -40,7 +38,6 @@ namespace
 {
 int SetNumEnemy();
 CEnemy::TYPE SelectType();
-void OutputNumEnemy();
 
 void Init();
 void Input();
@@ -152,36 +149,12 @@ CEnemy::TYPE SelectType()
 }
 
 //---------------------------------------------------
-//敵の数を表示
-//---------------------------------------------------
-void OutputNumEnemy()
-{
-	printf("\n\n 敵の総数 : [ %d ]", CEnemy::GetNumAll());
-	printf("\n 人型 : [ %d ]", CEnemy::GetNumHuman());
-	printf("\n 鳥型 : [ %d ]", CEnemy::GetNumBird());
-}
-
-//---------------------------------------------------
 //初期化
 //---------------------------------------------------
 void Init()
 {
-	for (int i = 0; i < CEnemy::MAX_ENEMY; i++)
-	{//nullptrで初期化する
-		if (s_apEnemy[i] == nullptr)
-		{//NULLチェック
-			continue;
-		}
-
-		/* nullptrではない場合 */
-
-		//終了
-		s_apEnemy[i]->Uninit();
-
-		//メモリの解放
-		delete s_apEnemy[i];
-		s_apEnemy[i] = nullptr;
-	}
+	//全ての敵の破棄
+	CEnemy::ReleaseAll();
 }
 
 //---------------------------------------------------
@@ -194,44 +167,16 @@ void Input()
 
 	for (int i = 0; i < nNumEnemy; i++)
 	{
-		if (s_apEnemy[i] != nullptr)
-		{//NULLチェック
-			//メモリの解放
-			delete s_apEnemy[i];
-			s_apEnemy[i] = nullptr;
-		}
-
 		//何体目か表示
 		printf("\n 《 %d体目 》", (i + 1));
 
 		//敵の種類を選択
 		CEnemy::TYPE type = SelectType();
 
-		switch (type)
-		{//敵の種類毎の処理
-		case CEnemy::TYPE::HUMAN:	/* 人型 */
+		//敵の生成
+		CEnemy* pEnemy = CEnemy::Create(type);
 
-			//メモリの動的確保
-			s_apEnemy[i] = new CEnemyHuman;
-			break;
-
-		case CEnemy::TYPE::BIRD:	/* 鳥型 */
-
-			//メモリの動的確保
-			s_apEnemy[i] = new CEnemyBird;
-			break;
-
-		case CEnemy::TYPE::NONE:	/* 選択範囲外 */
-		case CEnemy::TYPE::MAX:
-		default:
-			assert(false);
-			break;
-		}
-
-		//初期化
-		s_apEnemy[i]->Init();
-
-		if (s_apEnemy[i] == nullptr)
+		if (pEnemy == nullptr)
 		{//NULLチェック
 			continue;
 		}
@@ -239,7 +184,7 @@ void Input()
 		/* nullptrでは無い場合 */
 
 		//入力
-		s_apEnemy[i]->Input();
+		pEnemy->Input();
 
 		//画面をクリア
 		system("cls");
@@ -251,21 +196,8 @@ void Input()
 //---------------------------------------------------
 void Output()
 {
-	for (int i = 0; i < CEnemy::GetNumAll(); i++)
-	{
-		if (s_apEnemy[i] == nullptr)
-		{//NULLチェック
-			continue;
-		}
-
-		/* nullptrでは無い場合 */
-
-		//出力
-		s_apEnemy[i]->Output();
-	}
-
-	//敵の数を表示
-	OutputNumEnemy();
+	//全ての敵を出力
+	CEnemy::OutputAll();
 }
 
 //---------------------------------------------------
@@ -273,21 +205,7 @@ void Output()
 //---------------------------------------------------
 void Uninit()
 {
-	for (int i = 0; i < CEnemy::MAX_ENEMY; i++)
-	{
-		if (s_apEnemy[i] == nullptr)
-		{//NULLチェック
-			continue;
-		}
-
-		/* nullptrではない場合 */
-
-		//終了
-		s_apEnemy[i]->Uninit();
-
-		//メモリの解放
-		delete s_apEnemy[i];
-		s_apEnemy[i] = nullptr;
-	}
+	//全ての敵の破棄
+	CEnemy::ReleaseAll();
 }
 }
