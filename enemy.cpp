@@ -20,7 +20,8 @@
 //********************************
 //静的メンバ変数
 //********************************
-CEnemy* CEnemy::m_apEnemy[CEnemy::MAX_ENEMY];
+CEnemy* CEnemy::m_apEnemy[CEnemy::MAX_ENEMY] = {};	//ポインタ
+
 int CEnemy::m_nNumAll = 0;		//総数
 int CEnemy::m_nNumHuman = 0;	//人型敵の数
 int CEnemy::m_nNumBird = 0;		//鳥型敵の数
