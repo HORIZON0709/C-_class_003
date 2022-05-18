@@ -86,7 +86,7 @@ void CEnemy::ReleaseAll()
 //===================================================
 void CEnemy::OutputAll()
 {
-	for (int i = 0; i < CEnemy::GetNumAll(); i++)
+	for (int i = 0; i < m_nNumAll; i++)
 	{
 		if (m_apEnemy[i] == nullptr)
 		{//NULLチェック
