@@ -31,18 +31,20 @@ int CEnemy::m_nNumBird = 0;		//鳥型敵の数
 //===================================================
 CEnemy* CEnemy::Create(TYPE type)
 {
+	int nIdx = m_nNumAll;	//インデックス数用
+
 	switch (type)
 	{//種類毎の処理
 	case CEnemy::TYPE::HUMAN:	/* 人型 */
 
 		//メモリの動的確保
-		m_apEnemy[m_nNumAll - 1] = new CEnemyHuman;
+		m_apEnemy[nIdx] = new CEnemyHuman;
 		break;
 
 	case CEnemy::TYPE::BIRD:	/* 鳥型 */
 
 		//メモリの動的確保
-		m_apEnemy[m_nNumAll - 1] = new CEnemyBird;
+		m_apEnemy[nIdx] = new CEnemyBird;
 		break;
 
 	case CEnemy::TYPE::NONE:	/* 選択範囲外 */
@@ -53,9 +55,9 @@ CEnemy* CEnemy::Create(TYPE type)
 	}
 
 	//初期化
-	m_apEnemy[m_nNumAll - 1]->Init();
+	m_apEnemy[nIdx]->Init();
 
-	return m_apEnemy[m_nNumAll - 1];	//動的確保したものを返す
+	return m_apEnemy[nIdx];	//動的確保したものを返す
 }
 
 //===================================================
