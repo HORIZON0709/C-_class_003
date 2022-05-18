@@ -51,6 +51,9 @@ CEnemy* CEnemy::Create(TYPE type)
 		break;
 	}
 
+	//‰Šú‰»
+	m_apEnemy[m_nNumAll - 1]->Init();
+
 	return m_apEnemy[m_nNumAll - 1];	//“®“IŠm•Û‚µ‚½‚à‚Ì‚ð•Ô‚·
 }
 

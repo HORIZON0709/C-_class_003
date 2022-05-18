@@ -115,9 +115,6 @@ void Input()
 
 		/* nullptr‚Å‚Í–³‚¢ê‡ */
 
-		//‰Šú‰»
-		pEnemy->Init();
-
 		//“ü—Í
 		pEnemy->Input();
 
